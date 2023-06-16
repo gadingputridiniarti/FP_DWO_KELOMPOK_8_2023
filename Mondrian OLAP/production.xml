@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<Schema name="adventureworks">
+
+<!-- Production -->
+<Cube name="production" defaultMeasure="Amount">
+  <Table name="fakta_production"/>
+
+  <Dimension name="location" foreignKey ="LocationID">
+      <Hierarchy hasAll="true" allMemberName="All location" primaryKey ="LocationID">
+      <Table name="location"/>
+      <Level name="name" column="name"/>
+      </Hierarchy>
+      
+  </Dimension>
+  
+  <Dimension name="time" foreignKey="time_id">
+    <Hierarchy hasAll="true" allMemberName="All Times" primaryKey="time_id">
+      <Table name="time" />
+      <Level name="Year" column="tahun" type="Numeric" uniqueMembers="true"
+          levelType="TimeYears"/>
+      <Level name="Month" column="bulan" uniqueMembers="false" type="Numeric"
+          levelType="TimeMonths"/>
+      <Level name="Date" column="tanggal" uniqueMembers="false" type="Numeric"
+          levelType="TimeDays"/>
+    </Hierarchy>
+   
+  </Dimension>
+
+  <Dimension name="product" foreignKey = "ProductID">
+    <Hierarchy hasAll="true" allMemberName="All Product" primaryKey ="ProductID">
+      <Table name="product" />
+      <Level name="Name" column="Name"/>
+    </Hierarchy>
+  </Dimension>
+
+  <Dimension name="dim_shipmethod" foreignKey="ShipMethodID">
+    
+    <Hierarchy  hasAll  ="true" allMemberName="All shipmethod" primaryKey  = "ShipMethodID">
+        <Table name="dim_shipmethod"/>
+        <Level name="Jasa Pengiriman" column="jasapengiriman"/>
+    </Hierarchy>
+  </Dimension>
+
+    <Measure name="Quantity" column="Quantity" aggregator="sum"
+      formatString="Standard"/>
+  <Measure name="Order" column="OrderQty" aggregator="sum"
+      formatString="Standard"/>
+</Cube>
+
+</Schema>

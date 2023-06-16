@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<Schema name="adventureworks">
+
+<!-- Purchasing -->
+<Cube name="purchasing" defaultMeasure="Amount">
+  
+  <Table name="fakta_purchase"/>
+
+  <Dimension name="dim_addres" foreignKey ="address_id">
+      <Hierarchy hasAll="true" allMemberName="All addres" primaryKey ="address_id">
+      <Table name="dim_addres"/>
+      <Level name="city" column="city"/>
+      </Hierarchy>
+  </Dimension>
+
+  <Dimension name="dim_time" foreignKey="time_key">
+    <Hierarchy hasAll="true" allMemberName="All Times" primaryKey="time_key">
+      <Table name="dim_time" />
+      <Level name="Year" column="year" type="Numeric" uniqueMembers="true"
+          levelType="TimeYears"/>
+      <Level name="Month" column="month" uniqueMembers="false" type="Numeric"
+          levelType="TimeMonths"/>
+      <Level name="Date" column="day" uniqueMembers="false" type="Numeric"
+          levelType="TimeDays"/>
+    </Hierarchy>
+   
+  </Dimension>
+
+  <Dimension name="dim_productvendor" foreignKey = "ProdukID">
+    <Hierarchy hasAll="true" allMemberName="All product" primaryKey ="ProdukID">
+      <Table name="dim_productvendor" />
+      <Level name="Name" column="Name"/>
+    </Hierarchy>
+  </Dimension>
+
+  <Dimension name="dim_vendor" foreignKey="VendorID">
+    
+    <Hierarchy  hasAll  ="true" allMemberName="All vendor" primaryKey  = "VendorID">
+        <Table name="dim_vendor"/>
+        <Level name="Vendor Name" column="Vendor_Name"/>
+    </Hierarchy>
+  </Dimension>
+    
+
+  <Measure name="Order" column="OrderQty" aggregator="sum"
+      formatString="Standard"/>
+  <Measure name="Total" column="TotalDue" aggregator="sum"
+      formatString="Standard"/>
+
+</Cube>
+
+</Schema>
